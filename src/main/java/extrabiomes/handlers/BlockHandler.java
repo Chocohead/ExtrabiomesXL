@@ -603,20 +603,6 @@ public abstract class BlockHandler {
 			public int getMetadata() {
 				return metadata;
 			}
-			
-			/* FIXME: Add these textures back
-			textures[0] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logfirside");
-	        textures[1] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logfirtop");
-	        
-	        textures[2] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logacaciaside");
-	        textures[3] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logacaciatop");
-	        
-	        textures[4] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logcypressside");
-	        textures[5] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logcypresstop");
-	        
-	        textures[6] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logjapanesemapleside");
-	        textures[7] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logjapanesemapletop");
-			 */
 		}
 		
 		/** 4 new log types, name open to change **/
@@ -640,19 +626,6 @@ public abstract class BlockHandler {
 			public int getMetadata() {
 				return metadata;
 			}
-			
-			/* FIXME: Add these textures back
-			textures[0] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "lograinboweucalyptusside");
-        	textures[1] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "lograinboweucalyptustop");
-        
-        	textures[2] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logautumnside");
-        	textures[3] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logautumntop");
-        
-	        textures[4] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logbaldcypressside");
-	        textures[5] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logbaldcypresstop");
-	        
-	        textures[6] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logredwoodside");
-	        textures[7] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logredwoodtop");*/
 		}
 		
 		public enum QuarterLogs_A_Type implements IQuarterSerializable {

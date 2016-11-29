@@ -1,26 +1,104 @@
 {
 	"forge_marker": 1,
 	"defaults": {
-		"transform": "forge:default-block"
+		"transform": "forge:default-block",
+		"model": "leaves"
 	},
 	"variants": {
 		"type": {
-			"umber": {"model": "extrabiomesxl:leaves/umber"},
-			"goldenrod": {"model": "extrabiomesxl:leaves/goldenrod"},
-			"vermillion": {"model": "extrabiomesxl:leaves/vermillion"},
-			"citrine": {"model": "extrabiomesxl:leaves/citrine"},
+			"umber": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesbrownautumnfancy",
+					"fast": "extrabiomesxl:blocks/leavesbrownautumnfast"
+    			}
+    		},
+			"goldenrod": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesorangeautumnfancy",
+					"fast": "extrabiomesxl:blocks/leavesorangeautumnfast"
+    			}
+    		},
+			"vermillion": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesredautumnfancy",
+					"fast": "extrabiomesxl:blocks/leavesredautumnfast"
+    			}
+    		},
+			"citrine": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavescypressfancy",
+					"fast": "extrabiomesxl:blocks/leavescypressfast"
+    			}
+    		},
 			
-			"bald_cypress": {"model": "extrabiomesxl:leaves/bald_cypress"},
-			"japanese_maple": {"model": "extrabiomesxl:leaves/japanese_maple"},
-			"japanese_maple_shrub": {"model": "extrabiomesxl:leaves/japanese_maple_shrub"},
-			"rainbow_eucalyptus": {"model": "extrabiomesxl:leaves/rainbow_eucalyptus"},
+			"bald_cypress": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesbaldcypressfancy",
+					"fast": "extrabiomesxl:blocks/leavesbaldcypressfast"
+    			}
+    		},
+			"japanese_maple": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesjapanesemaplefancy",
+					"fast": "extrabiomesxl:blocks/leavesjapanesemaplefast"
+    			}
+    		},
+			"japanese_maple_shrub": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesjapanesemapleshrubfancy",
+					"fast": "extrabiomesxl:blocks/leavesjapanesemapleshrubfast"
+    			}
+    		},
+			"rainbow_eucalyptus": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesrainboweucalyptusfancy",
+					"fast": "extrabiomesxl:blocks/leavesrainboweucalyptusfast"
+    			}
+    		},
 			
-			"sakura_blossom": {"model": "extrabiomesxl:leaves/sakura_blossom"},
+			"sakura_blossom": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavessakurafancy",
+					"fast": "extrabiomesxl:blocks/leavessakurafast"
+    			}
+    		},
 			
-			"fir": {"model": "extrabiomesxl:leaves/fir"},
-			"redwood": {"model": "extrabiomesxl:leaves/redwood"},
-			"acacia": {"model": "extrabiomesxl:leaves/acacia"},
-			"cypress": {"model": "extrabiomesxl:leaves/cypress"}
+			"fir": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesfirfancy",
+					"fast": "extrabiomesxl:blocks/leavesfirfast"
+    			}
+    		},
+			"redwood": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesredwoodfancy",
+					"fast": "extrabiomesxl:blocks/leavesredwoodfast"
+    			}
+    		},
+			"acacia": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavesacaciafancy",
+					"fast": "extrabiomesxl:blocks/leavesacaciafast"
+    			}
+    		},
+			"cypress": {
+				"textures": {
+					"fancy": "extrabiomesxl:blocks/leavescypressfancy",
+					"fast": "extrabiomesxl:blocks/leavescypressfast"
+    			}
+    		}
+		},
+		"render": {
+			"true": {
+				"textures": {
+					"all": "#fancy"
+				}
+			},
+			"false": {
+				"textures": {
+					"all": "#fast"
+				}
+			}
 		},
 		"inventory": [{}]
 	}

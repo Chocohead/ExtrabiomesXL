@@ -6,15 +6,19 @@
 
 package extrabiomes.utility;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
 import extrabiomes.Extrabiomes;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
@@ -23,6 +27,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public abstract class ModelUtil {
+	@SideOnly(Side.CLIENT)
+	public static abstract class CustomStateMapper extends StateMapperBase implements ItemMeshDefinition {
+		public ResourceLocation[] getVarients() {
+			Collection<ModelResourceLocation> varients = mapStateModelLocations.values(); 
+			return varients.toArray(new ResourceLocation[varients.size()]);
+		}
+
+		@SuppressWarnings("unchecked")
+		protected <N extends Comparable<N>> String getPropertyName(IProperty<N> property, Comparable<?> value) {
+			return property.getName((N) value);
+		}
+	}
 	private static final DefaultStateMapper defaultStateMapper = new DefaultStateMapper();
 	
 	public static ModelResourceLocation getModelLocation(ResourceLocation loc, IBlockState state) {

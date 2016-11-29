@@ -11,25 +11,45 @@ import java.util.List;
 import extrabiomes.Extrabiomes;
 import extrabiomes.api.UseLogTurnerEvent;
 import extrabiomes.lib.IMetaSerializable;
+import extrabiomes.lib.ITextureRegisterer;
 import extrabiomes.lib.PropertyEnum;
+import extrabiomes.utility.ModelUtil.CustomStateMapper;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEBXLLog<T extends Enum<T> & IMetaSerializable> extends BlockLog {
+public class BlockEBXLLog<T extends Enum<T> & IMetaSerializable> extends BlockLog implements ITextureRegisterer {
+	@SideOnly(Side.CLIENT)
+	private class LogMapper extends CustomStateMapper {
+		@Override
+		protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+			assert state.getBlock() == BlockEBXLLog.this;
+			return new ModelResourceLocation(new ResourceLocation(Extrabiomes.RESOURCE_PATH, "logs"), getPropertyString(state.getProperties()));
+		}
+		
+		@Override
+		public ModelResourceLocation getModelLocation(ItemStack stack) {
+			return getModelResourceLocation(getStateFromMeta(stack.getItemDamage()));
+		}
+	};
+	
 	public static <T extends Enum<T> & IMetaSerializable> BlockEBXLLog<T> create(Class<T> types, T defaultType)
 	{
 		//Block needs the type for creating the block state faster than we can normally set it.
@@ -119,6 +139,18 @@ public class BlockEBXLLog<T extends Enum<T> & IMetaSerializable> extends BlockLo
 
         return i;
     }
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerTexture()
+	{
+		final LogMapper mapper = new LogMapper();
+		Item item = Item.getItemFromBlock(this);
+		
+		ModelLoader.setCustomStateMapper(this, mapper);
+		ModelLoader.setCustomMeshDefinition(item, mapper);
+		ModelBakery.registerItemVariants(item, mapper.getVarients());
+	}
 
     @Override
     protected ItemStack createStackedBlock(IBlockState state)

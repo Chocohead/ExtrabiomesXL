@@ -8,14 +8,16 @@ package extrabiomes.module.summa.worldgen;
 
 import java.util.Random;
 
+import extrabiomes.lib.BiomeSettings;
 import net.minecraft.block.Block;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import extrabiomes.lib.BiomeSettings;
 
 public class LeafPileGenerator implements IWorldGenerator
 {
@@ -32,10 +34,10 @@ public class LeafPileGenerator implements IWorldGenerator
             World world, IChunkGenerator chunkGenerator,
             IChunkProvider chunkProvider)
     {
-        chunkX = chunkX << 4;
-        chunkZ = chunkZ << 4;
-        final Biome biome = world.getBiomeGenForCoords(chunkX,
-                chunkZ);
+
+        Chunk chunk = chunkProvider.provideChunk(chunkX, chunkZ);
+        BlockPos centre = chunk.getChunkCoordIntPair().getCenterBlock(world.getSeaLevel());
+        final Biome biome = world.getBiomeProvider().getBiomeGenerator(centre, world.getBiomeGenForCoords(centre));
         
         if (BiomeSettings.GREENSWAMP.getBiome().isPresent() && biome == BiomeSettings.GREENSWAMP.getBiome().get()
                 || BiomeSettings.MOUNTAINRIDGE.getBiome().isPresent() && biome == BiomeSettings.MOUNTAINRIDGE.getBiome().get()
@@ -46,7 +48,7 @@ public class LeafPileGenerator implements IWorldGenerator
                 final int x = chunkX + rand.nextInt(16) + 8;
                 final int y = rand.nextInt(128);
                 final int z = chunkZ + rand.nextInt(16) + 8;
-                leafPileGen.generate(world, rand, x, y, z);
+                leafPileGen.generate(world, rand, new BlockPos(x, y, z));
             }
     }
     

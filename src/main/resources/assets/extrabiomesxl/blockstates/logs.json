@@ -1,0 +1,79 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "cube_column"
+	},
+	"variants": {
+		"type": {
+			"fir": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/logfirtop",
+					"side": "extrabiomesxl:blocks/logfirside",
+					"bark": "#side"
+				}
+			},
+			"acacia": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/logacaciatop",
+					"side": "extrabiomesxl:blocks/logacaciaside",
+					"bark": "#side"
+				}
+			},
+			"cypress": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/logcypresstop",
+					"side": "extrabiomesxl:blocks/logcypressside",
+					"bark": "#side"
+				}
+			},
+			"japanese_maple": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/logjapanesemapletop",
+					"side": "extrabiomesxl:blocks/logjapanesemapleside",
+					"bark": "#side"
+				}
+			},
+			"rainbow_eucalyptus": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/lograinboweucalyptustop",
+					"side": "extrabiomesxl:blocks/lograinboweucalyptusside",
+					"bark": "#side"
+				}
+			},
+			"autumn": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/logautumntop",
+					"side": "extrabiomesxl:blocks/logautumnside",
+					"bark": "#side"
+				}
+			},
+			"bald_cypress": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/logbaldcypresstop",
+					"side": "extrabiomesxl:blocks/logbaldcypressside",
+					"bark": "#side"
+				}
+			},
+			"redwood": {
+				"textures": {
+					"end": "extrabiomesxl:blocks/logredwoodtop",
+					"side": "extrabiomesxl:blocks/logredwoodside",
+					"bark": "#side"
+				}
+			}
+		},
+		"axis": {
+			"y": {},
+        	"z": {"x": 90},
+        	"x": {"x": 90, "y": 90},
+        	"none": {
+        		"model": "cube_all",
+			    "textures": {
+			        "all": "#bark"
+			    }
+			}
+		},
+		"inventory": [{}]
+	}
+}

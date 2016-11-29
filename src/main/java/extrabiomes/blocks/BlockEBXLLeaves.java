@@ -6,7 +6,6 @@
 
 package extrabiomes.blocks;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -16,16 +15,17 @@ import extrabiomes.Extrabiomes;
 import extrabiomes.lib.ILeafSerializable;
 import extrabiomes.lib.ITextureRegisterer;
 import extrabiomes.lib.PropertyEnum;
+import extrabiomes.utility.ModelUtil.CustomStateMapper;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -43,35 +43,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockEBXLLeaves<T extends Enum<T> & ILeafSerializable> extends BlockLeaves implements ITextureRegisterer {
 	@SideOnly(Side.CLIENT)
-	private class LeafMapper extends StateMapperBase implements ItemMeshDefinition {
+	private class LeafMapper extends CustomStateMapper {
 		@Override
 		protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
 			assert state.getBlock() == BlockEBXLLeaves.this;
 			return new ModelResourceLocation(new ResourceLocation(Extrabiomes.RESOURCE_PATH, "leaves"), getPropertyString(state.getProperties()));
 		}
 		
-		protected ResourceLocation[] getVarients() {
-			Collection<ModelResourceLocation> varients = mapStateModelLocations.values(); 
-			return varients.toArray(new ResourceLocation[varients.size()]);
-		}
-		
 		@Override
 		public ModelResourceLocation getModelLocation(ItemStack stack) {
-			return getModelResourceLocation(getStateFromMeta(stack.getItemDamage()));
+			IBlockState state = getStateFromMeta(stack.getItemDamage()); //Best guess attempt to see if leaves need to be translucent
+			return getModelResourceLocation(getActualState(state, Minecraft.getMinecraft().theWorld, BlockPos.ORIGIN));
 		}
 		
 		@Override
 		public String getPropertyString(Map<IProperty<?>, Comparable<?>> values) {
-			if (values.containsKey(type)) {
-				return type.getName() + '=' + getPropertyName(type, values.get(type))/* + "_leaves"*/;
+			if (values.containsKey(type)) { //Order is important, states go in alphabetical order by name
+				return RENDER_FANCY.getName() + '=' + getPropertyName(RENDER_FANCY, values.get(RENDER_FANCY)) + 
+						',' + type.getName() + '=' + getPropertyName(type, values.get(type))/* + "_leaves"*/;
 			} else {
 				return "normal";
 			}
-		}
-
-		@SuppressWarnings("unchecked")
-		private <N extends Comparable<N>> String getPropertyName(IProperty<N> property, Comparable<?> value) {
-			return property.getName((N) value);
 		}
 	};
 	
@@ -87,6 +79,7 @@ public class BlockEBXLLeaves<T extends Enum<T> & ILeafSerializable> extends Bloc
 	}
 	
 	protected static final ThreadLocal<PropertyEnum<?>> CURRENT_TYPE = new ThreadLocal<PropertyEnum<?>>();
+	public static final IProperty<Boolean> RENDER_FANCY = PropertyBool.create("render");
 	public final PropertyEnum<T> type;
 	
 	protected BlockEBXLLeaves() {
@@ -113,7 +106,7 @@ public class BlockEBXLLeaves<T extends Enum<T> & ILeafSerializable> extends Bloc
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, getTypeProperty(), CHECK_DECAY, DECAYABLE);
+		return new BlockStateContainer(this, getTypeProperty(), CHECK_DECAY, DECAYABLE, RENDER_FANCY);
 	}
 	
 	@Override
@@ -137,6 +130,11 @@ public class BlockEBXLLeaves<T extends Enum<T> & ILeafSerializable> extends Bloc
 
 		return meta;
     }
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		return state.withProperty(RENDER_FANCY, !isOpaqueCube(state));
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
