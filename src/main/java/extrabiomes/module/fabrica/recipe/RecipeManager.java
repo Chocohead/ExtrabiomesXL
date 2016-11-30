@@ -14,7 +14,7 @@ import com.google.common.base.Optional;
 import extrabiomes.Extrabiomes;
 import extrabiomes.api.Stuff;
 import extrabiomes.blocks.BlockCustomFence.BlockType;
-import extrabiomes.blocks.BlockRedRock;
+import extrabiomes.blocks.GenericTerrainBlock.TerrainBlockType;
 import extrabiomes.events.BlockActiveEvent.AcaciaStairsActiveEvent;
 import extrabiomes.events.BlockActiveEvent.AutumnStairsActiveEvent;
 import extrabiomes.events.BlockActiveEvent.BaldCypressStairsActiveEvent;
@@ -253,17 +253,17 @@ public class RecipeManager
     {
         final CommonProxy proxy = Extrabiomes.proxy;
         
-        redRockItem = Optional.of(new ItemStack(event.block, 1, BlockRedRock.BlockType.RED_ROCK.metadata()));
-        redCobbleItem = Optional.of(new ItemStack(event.block, 1, BlockRedRock.BlockType.RED_COBBLE.metadata()));
-        redRockBrickItem = Optional.of(new ItemStack(event.block, 1, BlockRedRock.BlockType.RED_ROCK_BRICK.metadata()));
+        redRockItem = Optional.of(new ItemStack(event.block, 1, TerrainBlockType.RED_ROCK.getMetadata()));
+        redCobbleItem = Optional.of(new ItemStack(event.block, 1, TerrainBlockType.RED_COBBLE.getMetadata()));
+        redRockBrickItem = Optional.of(new ItemStack(event.block, 1, TerrainBlockType.RED_ROCK_BRICK.getMetadata()));
         
         IRecipe recipe = new ShapelessOreRecipe(new ItemStack(Items.CLAY_BALL, 4), redCobbleItem.get(), Items.WATER_BUCKET, Items.WATER_BUCKET, Items.WATER_BUCKET);
         proxy.addRecipe(recipe);
         
-        recipe = new ShapedOreRecipe(new ItemStack(event.block, 4, BlockRedRock.BlockType.RED_ROCK_BRICK.metadata()), new String[] { "rr", "rr" }, 'r', redRockItem.get());
+        recipe = new ShapedOreRecipe(new ItemStack(event.block, 4, TerrainBlockType.RED_ROCK_BRICK.getMetadata()), new String[] { "rr", "rr" }, 'r', redRockItem.get());
         proxy.addRecipe(recipe);
         
-        proxy.addSmelting(Item.getItemFromBlock(event.block), BlockRedRock.BlockType.RED_COBBLE.metadata(), redRockItem.get(), 0.1F);
+        proxy.addSmelting(Item.getItemFromBlock(event.block), TerrainBlockType.RED_COBBLE.getMetadata(), redRockItem.get(), 0.1F);
     }
     
     @SubscribeEvent

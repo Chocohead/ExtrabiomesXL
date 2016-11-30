@@ -166,6 +166,18 @@ public class ClientProxy extends CommonProxy
     		blocks.add(leafPile);
     	}
     	
+    	if (BlockSettings.GLORIOSA.getEnabled()) {
+    		Block vine = getBlock(Element.VINE_GLORIOSA);
+    		
+    		colours.registerBlockColorHandler(new IBlockColor() {
+				@Override
+				public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
+					return 0xFFFFFF;
+				}
+			}, vine);
+    		blocks.add(vine);
+    	}
+    	
 		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
 			@SuppressWarnings("deprecation")
 			public int getColorFromItemstack(ItemStack stack, int tintIndex) {

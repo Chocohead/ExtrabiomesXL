@@ -25,7 +25,7 @@ public abstract class ItemHandler
     {
         createLogTurner();
 		createDye();
-		//createFoods();
+		createFoods();
     }
     
     private static void createLogTurner()

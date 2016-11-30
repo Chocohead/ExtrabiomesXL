@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import extrabiomes.helpers.LogHelper;
 import net.minecraft.block.state.IBlockState;
 
 public class PropertyEnum<T extends Enum<T> & IMetaSerializable> extends net.minecraft.block.properties.PropertyEnum<T> {
@@ -35,9 +36,8 @@ public class PropertyEnum<T extends Enum<T> & IMetaSerializable> extends net.min
 	}
 	
 	public T getForMeta(int meta) {
-		if (meta < 0 || meta >= maxSize) {
-			//LogHelper.info("Property Enum received a higher meta than expected (got: %d, limit: %d)", meta, maxSize);
-			//When registering blocks that happens normally ^
+		if (meta < 0 || meta >= values.length) {
+			LogHelper.info("Property Enum received a higher meta than expected (got: %d, limit: %d)", meta, maxSize);
 			return getDefault();
 		} else {
 			return values[meta];

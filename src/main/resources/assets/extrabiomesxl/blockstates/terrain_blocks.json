@@ -1,0 +1,31 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "cube_all"
+	},
+	"variants": {
+		"type": {
+			"red_rock": {
+				"textures": {
+					"all": "extrabiomesxl:blocks/redrock"
+				}
+			},
+			"red_cobble": {
+				"textures": {
+					"all": "extrabiomesxl:blocks/redrockcobble"
+				}
+			},
+			"red_rock_brick": {
+				"textures": {
+					"all": "extrabiomesxl:blocks/redrockbrick"
+				}
+			},
+			"cracked_sand": {
+				"textures": {
+					"all": "extrabiomesxl:blocks/crackedsand"
+				}
+			}
+		}
+	}			
+}

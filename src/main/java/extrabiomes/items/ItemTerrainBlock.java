@@ -6,16 +6,16 @@
 
 package extrabiomes.items;
 
-import java.util.Locale;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import extrabiomes.blocks.BlockGreenLeaves;
+import extrabiomes.blocks.GenericTerrainBlock.TerrainBlockType;
+import extrabiomes.utility.MultiItemBlock;
 
-public class ItemCustomGreenLeaves extends ItemCustomLeaves
+public class ItemTerrainBlock extends MultiItemBlock
 {
-    
-    public ItemCustomGreenLeaves(Block block)
+    private static final int META_LIMIT = TerrainBlockType.values().length;
+	
+    public ItemTerrainBlock(Block block)
     {
         super(block);
     }
@@ -23,11 +23,9 @@ public class ItemCustomGreenLeaves extends ItemCustomLeaves
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-        int metadata = unmarkedMetadata(itemstack.getItemDamage());
-        //if (metadata > 2) metadata = 0;
+        int metadata = itemstack.getItemDamage() % META_LIMIT;
         itemstack = itemstack.copy();
         itemstack.setItemDamage(metadata);
-        return super.getUnlocalizedName() + "." + BlockGreenLeaves.BlockType.values()[metadata].toString().toLowerCase(Locale.ENGLISH);
+        return super.getUnlocalizedName(itemstack);
     }
-    
 }

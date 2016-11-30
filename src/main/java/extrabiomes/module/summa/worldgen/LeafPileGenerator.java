@@ -8,12 +8,12 @@ package extrabiomes.module.summa.worldgen;
 
 import java.util.Random;
 
+import extrabiomes.helpers.BiomeHelper;
 import extrabiomes.lib.BiomeSettings;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -35,9 +35,7 @@ public class LeafPileGenerator implements IWorldGenerator
             IChunkProvider chunkProvider)
     {
 
-        Chunk chunk = chunkProvider.provideChunk(chunkX, chunkZ);
-        BlockPos centre = chunk.getChunkCoordIntPair().getCenterBlock(world.getSeaLevel());
-        final Biome biome = world.getBiomeProvider().getBiomeGenerator(centre, world.getBiomeGenForCoords(centre));
+        final Biome biome = BiomeHelper.getBiome(world, chunkProvider, chunkX, chunkZ);
         
         if (BiomeSettings.GREENSWAMP.getBiome().isPresent() && biome == BiomeSettings.GREENSWAMP.getBiome().get()
                 || BiomeSettings.MOUNTAINRIDGE.getBiome().isPresent() && biome == BiomeSettings.MOUNTAINRIDGE.getBiome().get()

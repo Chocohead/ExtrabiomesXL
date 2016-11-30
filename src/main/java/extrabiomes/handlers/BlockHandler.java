@@ -24,9 +24,9 @@ import extrabiomes.blocks.BlockMiniLog;
 import extrabiomes.blocks.BlockNewQuarterLog;
 import extrabiomes.blocks.BlockNewSapling;
 import extrabiomes.blocks.BlockQuarterLog;
-import extrabiomes.blocks.BlockRedRock;
 import extrabiomes.blocks.BlockWaterPlant;
 import extrabiomes.blocks.GenericTerrainBlock;
+import extrabiomes.blocks.GenericTerrainBlock.TerrainBlockType;
 import extrabiomes.events.BlockActiveEvent.RedRockActiveEvent;
 import extrabiomes.helpers.BiomeHelper;
 import extrabiomes.helpers.ForestryModHelper;
@@ -34,6 +34,7 @@ import extrabiomes.helpers.LogHelper;
 import extrabiomes.items.ItemEBXLLeaves;
 import extrabiomes.items.ItemKneeLog;
 import extrabiomes.items.ItemNewQuarterLog;
+import extrabiomes.items.ItemTerrainBlock;
 import extrabiomes.lib.BiomeSettings;
 import extrabiomes.lib.BlockSettings;
 import extrabiomes.lib.Element;
@@ -58,6 +59,7 @@ import extrabiomes.utility.MultiItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -69,9 +71,9 @@ public abstract class BlockHandler {
 		LogHandler.createLogs();
 		LeafHandler.createLeaves();
 
-		/*createCattail();
-		createCrackedSand();
-		createFlowers();
+		//createCattail();
+		createTerrainBlocks();
+		/*createFlowers();
 		createGrass();
 		createVines();
 		createWaterPlants();*/
@@ -115,29 +117,47 @@ public abstract class BlockHandler {
 		proxy.registerWorldGenerator(new CatTailGenerator(block));
 	}
 
-	private static void createCrackedSand() {
-		if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.CRACKEDSAND.getEnabled())
-			return;
+	private static void createTerrainBlocks() {
+		if (ModuleControlSettings.SUMMA.isEnabled()) {
+			boolean crackedSand = BlockSettings.CRACKEDSAND.getEnabled();
+			boolean redrock = BlockSettings.REDROCK.getEnabled();
 
-		final GenericTerrainBlock block = new GenericTerrainBlock(0, Material.rock);
-		block.setBlockName("extrabiomes.crackedsand").setHardness(1.2F).setStepSound(Block.soundTypeStone)
-				.setCreativeTab(Extrabiomes.tabsEBXL);
+			if (!crackedSand && !redrock) return;
 
-		block.texturePath = "crackedsand";
+			final GenericTerrainBlock block = new GenericTerrainBlock();
+			block.setUnlocalizedName("extrabiomes.terrain");
 
-		final CommonProxy proxy = Extrabiomes.proxy;
-		proxy.setBlockHarvestLevel(block, "pickaxe", 0);
-		proxy.registerBlock(block, "terrain_blocks2");
+			final CommonProxy proxy = Extrabiomes.proxy;
+			proxy.setBlockHarvestLevel(block, "pickaxe", 0);
+			proxy.registerBlock(block, ItemTerrainBlock.class, "terrain_blocks");
 
-		proxy.registerOre("sandCracked", block);
+			if (crackedSand) {
+				ItemStack stack = new ItemStack(block, 1, TerrainBlockType.CRACKED_SAND.getMetadata());
 
-		final ItemStack stack = new ItemStack(block);
-		Element.CRACKEDSAND.set(stack);
+				proxy.registerOre("sandCracked", stack);
+				Element.CRACKEDSAND.set(stack);
 
-		BiomeHelper.addTerrainBlockstoBiome(BiomeSettings.WASTELAND, block, block);
+				IBlockState state = block.getStateFromMeta(TerrainBlockType.CRACKED_SAND.getMetadata());
+				BiomeHelper.addTerrainBlockstoBiome(BiomeSettings.WASTELAND, state, state);
+			}
 
-		ForestryModHelper.addToDiggerBackpack(stack);
-		// FacadeHelper.addBuildcraftFacade(block);
+			if (redrock) {
+				Element.RED_ROCK.set(new ItemStack(block, 1, TerrainBlockType.RED_ROCK.getMetadata()));
+			    Element.RED_COBBLE.set(new ItemStack(block, 1, TerrainBlockType.RED_COBBLE.getMetadata()));
+			    Element.RED_ROCK_BRICK.set(new ItemStack(block, 1, TerrainBlockType.RED_ROCK_BRICK.getMetadata()));
+			
+			    Extrabiomes.postInitEvent(new RedRockActiveEvent(block));
+			    
+			    IBlockState state = block.getStateFromMeta(TerrainBlockType.RED_ROCK.getMetadata());
+			    BiomeHelper.addTerrainBlockstoBiome(BiomeSettings.MOUNTAINRIDGE, state, state);
+			}
+
+			ForestryModHelper.addToDiggerBackpack(new ItemStack(block, 1, Short.MAX_VALUE));
+			for (final TerrainBlockType type : TerrainBlockType.values()) {
+				// FacadeHelper.addBuildcraftFacade(block, type.metadata());
+				LogHelper.fine("Successfully built block for %s", type.getName());
+			}
+		}
 	}
 
 	private static void createFlowers() {
@@ -897,32 +917,8 @@ public abstract class BlockHandler {
 	
 	    BlockQuarterLog.setRenderId(Extrabiomes.proxy.registerBlockHandler(new RenderQuarterLog()));
 	
-	    for (final BlockQuarterLog.BlockType type : BlockQuarterLog.BlockType.values()) {
+	    for (final BlockQuarterLog.TerrainBlockType type : BlockQuarterLog.BlockType.values()) {
 	      FacadeHelper.addBuildcraftFacade(blockSE, type.getMetadata());
-	    }
-	  }
-	
-	  private static void createRedRock() {
-	    if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.REDROCK.getEnabled())
-	      return;
-	
-	    final BlockRedRock block = new BlockRedRock();
-	    block.setBlockName("extrabiomes.redrock").setHardness(1.5F).setResistance(2.0F).setCreativeTab(Extrabiomes.tabsEBXL);
-	
-	    final CommonProxy proxy = Extrabiomes.proxy;
-	    proxy.setBlockHarvestLevel(block, "pickaxe", 0);
-	    proxy.registerBlock(block, extrabiomes.items.ItemRedRock.class, "terrain_blocks1");
-	
-	    Element.RED_ROCK.set(new ItemStack(block, 1, BlockRedRock.BlockType.RED_ROCK.metadata()));
-	    Element.RED_COBBLE.set(new ItemStack(block, 1, BlockRedRock.BlockType.RED_COBBLE.metadata()));
-	    Element.RED_ROCK_BRICK.set(new ItemStack(block, 1, BlockRedRock.BlockType.RED_ROCK_BRICK.metadata()));
-	
-	    Extrabiomes.postInitEvent(new RedRockActiveEvent(block));
-	    BiomeHelper.addTerrainBlockstoBiome(BiomeSettings.MOUNTAINRIDGE, block, block);
-	
-	    ForestryModHelper.addToDiggerBackpack(new ItemStack(block, 1, Short.MAX_VALUE));
-	    for (final BlockRedRock.BlockType type : BlockRedRock.BlockType.values()) {
-	      //FacadeHelper.addBuildcraftFacade(block, type.metadata());
 	    }
 	  }
 	

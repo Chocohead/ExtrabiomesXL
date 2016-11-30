@@ -63,7 +63,7 @@ public class ItemCustomDye extends Item implements ITextureRegisterer {
 			final Color color = Color.VALUES[idx];
 			final Element element = elements[idx];
 			
-			LogHelper.info(color + " = " + element);
+			LogHelper.fine(color + " = " + element);
 
 			element.set(new ItemStack(this, 1, color.meta));
 			OreDictionary.registerOre("dye"+StringUtils.capitalize(color.name), element.get());

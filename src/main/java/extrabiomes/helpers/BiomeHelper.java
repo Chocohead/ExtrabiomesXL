@@ -12,9 +12,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.BiomeManager;
 
@@ -35,11 +40,16 @@ public abstract class BiomeHelper
     
     public static void addTerrainBlockstoBiome(BiomeSettings biome, Block topBlock, Block fillerBlock)
     {
+        addTerrainBlockstoBiome(biome, topBlock.getDefaultState(), fillerBlock.getDefaultState());
+    }
+    
+    public static void addTerrainBlockstoBiome(BiomeSettings biome, IBlockState topState, IBlockState fillerState)
+    {
         if (!biome.getBiome().isPresent())
             return;
         final Biome baseBiome = biome.getBiome().get();
-        baseBiome.topBlock = topBlock.getDefaultState();
-        baseBiome.fillerBlock = fillerBlock.getDefaultState();
+        baseBiome.topBlock = topState;
+        baseBiome.fillerBlock = fillerState;
     }
     
     /**
@@ -155,5 +165,12 @@ public abstract class BiomeHelper
             return;
         
         extrabiomes.api.BiomeManager.addWeightedGrassGenForBiome(biome.get(), grassGen, weight);
+    }
+    
+    public static Biome getBiome(World world, IChunkProvider chunkProvider, int chunkX, int chunkZ) {
+    	Chunk chunk = chunkProvider.provideChunk(chunkX, chunkZ);
+        BlockPos centre = chunk.getChunkCoordIntPair().getCenterBlock(world.getSeaLevel());
+        
+        return world.getBiomeProvider().getBiomeGenerator(centre, world.getBiomeGenForCoords(centre));
     }
 }

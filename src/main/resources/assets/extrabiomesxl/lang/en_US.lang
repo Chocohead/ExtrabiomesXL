@@ -45,7 +45,6 @@ tile.extrabiomes.leaves.goldenrod.name=Goldenrod Autumn Leaves
 tile.extrabiomes.leaves.vermillion.name=Vermillion Autumn Leaves
 tile.extrabiomes.leaves.citrine.name=Citrine Autumn Leaves
 tile.extrabiomes.cattail.name=Cattail
-tile.extrabiomes.crackedsand.name=Cracked Sand
 
 tile.extrabiomes.flower.autumn_shrub.name=Autumn Shrub
 tile.extrabiomes.flower.hydrangea.name=Hydrangea
@@ -138,13 +137,16 @@ tile.extrabiomes.planks.5.name=Rainbow Eucalyptus Wood Planks
 tile.extrabiomes.planks.6.name=Autumn Wood Planks
 tile.extrabiomes.planks.7.name=Bald Cypress Wood Planks
 tile.extrabiomes.planks.8.name=Sakura Wood Planks
+
 tile.extrabiomes.quicksand.name=Quicksand
-tile.extrabiomes.redrock.0.name=Red Rock
-tile.extrabiomes.redrock.1.name=Red Cobblestone
-tile.extrabiomes.redrock.2.name=Red Rock Brick
+tile.extrabiomes.terrain.0.name=Red Rock
+tile.extrabiomes.terrain.1.name=Red Cobblestone
+tile.extrabiomes.terrain.2.name=Red Rock Brick
+tile.extrabiomes.terrain.3.name=Cracked Sand
 tile.extrabiomes.redrockslab.redcobble.name=Red Cobblestone Slab
 tile.extrabiomes.redrockslab.redrock.name=Red Rock Slab
 tile.extrabiomes.redrockslab.redrockbrick.name=Red Rock Brick Slab
+
 tile.extrabiomes.sapling.umber.name=Umber Autumn Sapling
 tile.extrabiomes.sapling.goldenrod.name=Goldenrod Autumn Sapling
 tile.extrabiomes.sapling.vermillion.name=Vermillion Autumn Sapling
@@ -158,6 +160,7 @@ tile.extrabiomes.sapling.japanese_maple.name=Japanese Maple Sapling
 tile.extrabiomes.sapling.japanese_maple_shrub.name=Japanese Maple Shrub Sapling
 tile.extrabiomes.sapling.rainbow_eucalyptus.name=Rainbow Eucalyptus Sapling
 tile.extrabiomes.sapling.sakura_blossom.name=Sakura Sapling
+
 tile.extrabiomes.stairs.acacia.name=Acacia Wood Stairs
 tile.extrabiomes.stairs.fir.name=Fir Wood Stairs
 tile.extrabiomes.stairs.redcobble.name=Red Cobblestone Stairs
@@ -169,12 +172,15 @@ tile.extrabiomes.stairs.baldcypress.name=Bald Cypress Stairs
 tile.extrabiomes.stairs.autumn.name=Autumn Stairs
 tile.extrabiomes.stairs.rainboweucalyptus.name=Rainbow Eucalyptus Stairs
 tile.extrabiomes.stairs.sakurablossom.name=Sakura Stairs
+
 tile.extrabiomes.tallgrass.0.name=Brown Grass
 tile.extrabiomes.tallgrass.1.name=Short Brown Grass
 tile.extrabiomes.tallgrass.2.name=Dead Grass
 tile.extrabiomes.tallgrass.3.name=Tall Dead Grass
 tile.extrabiomes.tallgrass.4.name=Dead Yellow Grass
+
 tile.extrabiomes.wall.0.name=Red Cobblestone Wall
+
 tile.extrabiomes.woodslab.acacia.name=Acacia Wood Slab
 tile.extrabiomes.woodslab.fir.name=Fir Wood Slab
 tile.extrabiomes.woodslab.redwood.name=Redwood Slab
