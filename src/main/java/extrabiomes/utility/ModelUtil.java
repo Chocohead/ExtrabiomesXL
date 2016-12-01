@@ -29,6 +29,26 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class ModelUtil {
 	@SideOnly(Side.CLIENT)
 	public static abstract class CustomStateMapper extends StateMapperBase implements ItemMeshDefinition {
+		protected boolean mappedLocations = false;
+		
+		@Override
+		public Map<IBlockState, ModelResourceLocation> putStateModelLocations(Block block) {
+			if (!mappedLocations) {
+				Map<IBlockState, ModelResourceLocation> out = super.putStateModelLocations(block); 
+				mappedLocations = true;
+				return out;
+			} else {
+				return mapStateModelLocations;
+			}
+		}
+		
+		@Override
+		protected final ModelResourceLocation getModelResourceLocation(IBlockState state) {
+			return mappedLocations ? mapStateModelLocations.get(state) : getModelLocation(state);
+		}
+
+		protected abstract ModelResourceLocation getModelLocation(IBlockState state);
+
 		public ResourceLocation[] getVarients() {
 			Collection<ModelResourceLocation> varients = mapStateModelLocations.values(); 
 			return varients.toArray(new ResourceLocation[varients.size()]);

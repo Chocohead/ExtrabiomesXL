@@ -15,7 +15,9 @@ import extrabiomes.blocks.BlockCustomFlower;
 import extrabiomes.blocks.BlockCustomFlower.BlockType;
 import extrabiomes.blocks.BlockCustomSapling;
 import extrabiomes.blocks.BlockCustomTallGrass;
+import extrabiomes.blocks.BlockCustomTallGrass.TallGrassType;
 import extrabiomes.blocks.BlockCustomVine;
+import extrabiomes.blocks.BlockCustomVine.VineType;
 import extrabiomes.blocks.BlockEBXLLeaves;
 import extrabiomes.blocks.BlockEBXLLog;
 import extrabiomes.blocks.BlockKneeLog;
@@ -32,6 +34,7 @@ import extrabiomes.helpers.BiomeHelper;
 import extrabiomes.helpers.ForestryModHelper;
 import extrabiomes.helpers.LogHelper;
 import extrabiomes.items.ItemEBXLLeaves;
+import extrabiomes.items.ItemGrass;
 import extrabiomes.items.ItemKneeLog;
 import extrabiomes.items.ItemNewQuarterLog;
 import extrabiomes.items.ItemTerrainBlock;
@@ -73,10 +76,10 @@ public abstract class BlockHandler {
 
 		//createCattail();
 		createTerrainBlocks();
-		/*createFlowers();
+		//createFlowers();
 		createGrass();
 		createVines();
-		createWaterPlants();*/
+		//createWaterPlants();
 	}
 
 	private static void createWaterPlants() throws Exception {
@@ -209,9 +212,9 @@ public abstract class BlockHandler {
 
 		// BlockCustomVine.BlockType[] vines =
 		// BlockCustomVine.BlockType.values();
-		BlockCustomVine.BlockType[] vines = { BlockCustomVine.BlockType.GLORIOSA };
+		VineType[] vines = { VineType.GLORIOSA };
 
-		for (BlockCustomVine.BlockType blockType : vines) {
+		for (VineType blockType : vines) {
 			final BlockSettings settings;
 			try {
 				settings = BlockSettings.valueOf(blockType.name());
@@ -223,15 +226,9 @@ public abstract class BlockHandler {
 			if (!settings.getEnabled())
 				continue;
 
-			/*
-			 * final String shortName = blockType.name()
-			 * .substring(blockType.name().indexOf('_')).toLowerCase();
-			 */
-
 			final BlockCustomVine block = new BlockCustomVine(blockType);
-			block.setBlockName("extrabiomes.vine." + blockType.name().toLowerCase())
-					.setCreativeTab(Extrabiomes.tabsEBXL);
-			proxy.registerBlock(block, ItemBlock.class, "vines");
+			block.setUnlocalizedName("extrabiomes.vine." + blockType.toString());
+			proxy.registerBlock(block, "vines");
 
 			final Element element;
 			try {
@@ -240,14 +237,13 @@ public abstract class BlockHandler {
 				LogHelper.warning("No element found for vine " + blockType);
 				continue;
 			}
-			final ItemStack item = new ItemStack(block, 1);
-			element.set(item);
+			element.set(new ItemStack(block));
 
 			ForestryModHelper.addToForesterBackpack(new ItemStack(block, 1, Short.MAX_VALUE));
 
 			final VineGenerator generator;
 			// gloriosa gets a biome list override
-			if (blockType == BlockCustomVine.BlockType.GLORIOSA) {
+			if (blockType == VineType.GLORIOSA) {
 				final BiomeSettings[] biomeList = { BiomeSettings.EXTREMEJUNGLE, BiomeSettings.MINIJUNGLE,
 						BiomeSettings.RAINFOREST };
 				generator = new VineGenerator(block, biomeList);
@@ -262,37 +258,33 @@ public abstract class BlockHandler {
 		if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.GRASS.getEnabled())
 			return;
 
-		final BlockCustomTallGrass block = new BlockCustomTallGrass(48, Material.vine);
-		block.setBlockName("extrabiomes.tallgrass").setHardness(0.0F).setStepSound(Block.soundTypeGrass)
-				.setCreativeTab(Extrabiomes.tabsEBXL);
+		final BlockCustomTallGrass block = new BlockCustomTallGrass();
+		block.setUnlocalizedName("extrabiomes.tallgrass");
 
 		final CommonProxy proxy = Extrabiomes.proxy;
-		proxy.registerBlock(block, extrabiomes.items.ItemGrass.class, "grass");
+		proxy.registerBlock(block, ItemGrass.class, "grass");
 		Blocks.FIRE.setFireInfo(block, 60, 100);
 
-		Element.GRASS_BROWN.set(new ItemStack(block, 1, BlockCustomTallGrass.BlockType.BROWN.metadata()));
-		Element.GRASS_DEAD.set(new ItemStack(block, 1, BlockCustomTallGrass.BlockType.DEAD.metadata()));
-		Element.GRASS_BROWN_SHORT.set(new ItemStack(block, 1, BlockCustomTallGrass.BlockType.SHORT_BROWN.metadata()));
-		Element.GRASS_DEAD_TALL.set(new ItemStack(block, 1, BlockCustomTallGrass.BlockType.DEAD_TALL.metadata()));
-		Element.GRASS_DEAD_YELLOW.set(new ItemStack(block, 1, BlockCustomTallGrass.BlockType.DEAD_YELLOW.metadata()));
+		Element.GRASS_BROWN.set(new ItemStack(block, 1, TallGrassType.BROWN.getMetadata()));
+		Element.GRASS_DEAD.set(new ItemStack(block, 1, TallGrassType.DEAD.getMetadata()));
+		Element.GRASS_BROWN_SHORT.set(new ItemStack(block, 1, TallGrassType.SHORT_BROWN.getMetadata()));
+		Element.GRASS_DEAD_TALL.set(new ItemStack(block, 1, TallGrassType.DEAD_TALL.getMetadata()));
+		Element.GRASS_DEAD_YELLOW.set(new ItemStack(block, 1, TallGrassType.DEAD_YELLOW.getMetadata()));
 
-		ItemStack grassStack = Element.GRASS_BROWN.get();
 		BiomeHelper.addWeightedGrassGen(BiomeSettings.MOUNTAINRIDGE.getBiome(),
-				new WorldGenCustomTallGrass(block.getDefaultState()), 100); //TODO: Fix state type once updated TallGrass
+				new WorldGenCustomTallGrass(block.withType(TallGrassType.BROWN)), 100);
 		
-		grassStack = Element.GRASS_BROWN_SHORT.get();
 		BiomeHelper.addWeightedGrassGen(BiomeSettings.MOUNTAINRIDGE.getBiome(),
-				new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()), 100);
+				new WorldGenCustomTallGrass(block.withType(TallGrassType.SHORT_BROWN)), 100);
 
-		grassStack = Element.GRASS_DEAD.get();
 		BiomeHelper.addWeightedGrassGen(BiomeSettings.WASTELAND.getBiome(),
-				new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()), 90);
-		grassStack = Element.GRASS_DEAD_YELLOW.get();
+				new WorldGenCustomTallGrass(block.withType(TallGrassType.DEAD)), 90);
+		
 		BiomeHelper.addWeightedGrassGen(BiomeSettings.WASTELAND.getBiome(),
-				new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()), 90);
-		grassStack = Element.GRASS_DEAD_TALL.get();
+				new WorldGenCustomTallGrass(block.withType(TallGrassType.DEAD_YELLOW)), 90);
+		
 		BiomeHelper.addWeightedGrassGen(BiomeSettings.WASTELAND.getBiome(),
-				new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()), 35);
+				new WorldGenCustomTallGrass(block.withType(TallGrassType.DEAD_TALL)), 35);
 	}
 
 	public static final class LeafHandler {

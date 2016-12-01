@@ -39,7 +39,7 @@ public class BlockEBXLLog<T extends Enum<T> & IMetaSerializable> extends BlockLo
 	@SideOnly(Side.CLIENT)
 	private class LogMapper extends CustomStateMapper {
 		@Override
-		protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+		protected ModelResourceLocation getModelLocation(IBlockState state) {
 			assert state.getBlock() == BlockEBXLLog.this;
 			return new ModelResourceLocation(new ResourceLocation(Extrabiomes.RESOURCE_PATH, "logs"), getPropertyString(state.getProperties()));
 		}

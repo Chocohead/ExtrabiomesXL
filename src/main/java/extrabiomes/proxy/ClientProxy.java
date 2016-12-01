@@ -31,6 +31,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerFoliage;
+import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -173,6 +174,18 @@ public class ClientProxy extends CommonProxy
 				@Override
 				public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
 					return 0xFFFFFF;
+				}
+			}, vine);
+    		blocks.add(vine);
+    	}
+    	
+    	if (BlockSettings.GRASS.getEnabled()) {
+    		Block vine = getBlock(Element.GRASS_BROWN);
+    		
+    		colours.registerBlockColorHandler(new IBlockColor() {
+				@Override
+				public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
+			        return ColorizerGrass.getGrassColor(0.5D, 1.0D);
 				}
 			}, vine);
     		blocks.add(vine);

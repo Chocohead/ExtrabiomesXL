@@ -33,6 +33,6 @@ public class ItemCustomFence extends MultiItemBlock {
   @SideOnly(Side.CLIENT)
   @Override
   public IIcon getIconFromDamage(int metadata) {
-      return this.field_150939_a.getIcon(0, metadata);
+      return this.block.getIcon(0, metadata);
   }
 }

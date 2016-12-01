@@ -10,6 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.logging.log4j.Logger;
 
@@ -27,9 +28,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.IFuelHandler;
@@ -87,11 +88,9 @@ public class CommonProxy
         return FMLLog.getLogger();
     }
 
-    @Deprecated
-    public Optional<ItemStack> getGrassSeed(World world)
+    public Optional<ItemStack> getGrassSeed(Random random, int fortune)
     {
-    	throw new RuntimeException("Dead");
-        //return Optional.fromNullable(ForgeHooks.getGrassSeed(world));
+        return Optional.fromNullable(ForgeHooks.getGrassSeed(random, fortune));
     }
 
     public List<ItemStack> getOres(String name)

@@ -1,0 +1,53 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"type": {
+			"gloriosa": {
+				"textures": {
+					"vine": "extrabiomesxl:blocks/vine_gloriosa"
+    			}
+    		},
+			"spanish_moss": {
+				"textures": {
+					"vine": "extrabiomesxl:blocks/vine_spanish_moss"
+    			}
+    		}
+		},
+		"facing": {
+			"none": {"model": "extrabiomesxl:vine/vine_1"},
+			"south": {"model": "extrabiomesxl:vine/vine_1"},
+			"west": {"model": "extrabiomesxl:vine/vine_1", "y": 90},
+			"north": {"model": "extrabiomesxl:vine/vine_1", "y": 180},
+			"east": {"model": "extrabiomesxl:vine/vine_1", "y": 270},
+			"east|north": {"model": "extrabiomesxl:vine/vine_2"},
+			"east|south": {"model": "extrabiomesxl:vine/vine_2", "y": 90},
+			"south|west": {"model": "extrabiomesxl:vine/vine_2", "y": 180},
+			"north|west": {"model": "extrabiomesxl:vine/vine_2", "y": 270},
+			"east|west": {"model": "extrabiomesxl:vine/vine_2_opposite"},
+			"north|south": {"model": "extrabiomesxl:vine/vine_2_opposite", "y": 90},
+			"east|north|south": {"model": "extrabiomesxl:vine/vine_3"},
+			"east|south|west": {"model": "extrabiomesxl:vine/vine_3", "y": 90},
+			"north|south|west": {"model": "extrabiomesxl:vine/vine_3", "y": 180},
+			"east|north|west": {"model": "extrabiomesxl:vine/vine_3", "y": 270},
+			"east|north|south|west": {"model": "extrabiomesxl:vine/vine_4"},
+			
+			"up": {"model": "extrabiomesxl:vine/vine_u"},
+			"south|up": {"model": "extrabiomesxl:vine/vine_1u"},
+			"up|west": {"model": "extrabiomesxl:vine/vine_1u", "y": 90},
+			"north|up": {"model": "extrabiomesxl:vine/vine_1u", "y": 180},
+			"east|up": {"model": "extrabiomesxl:vine/vine_1u", "y": 270},
+			"east|north|up": {"model": "extrabiomesxl:vine/vine_2u"},
+			"east|south|up": {"model": "extrabiomesxl:vine/vine_2u", "y": 90},
+			"south|up|west": {"model": "extrabiomesxl:vine/vine_2u", "y": 180},
+			"north|up|west": {"model": "extrabiomesxl:vine/vine_2u", "y": 270},
+			"east|up|west": {"model": "extrabiomesxl:vine/vine_2u_opposite"},
+			"north|south|up": {"model": "extrabiomesxl:vine/vine_2u_opposite", "y": 90},
+			"east|north|south|up": {"model": "extrabiomesxl:vine/vine_3u"},
+			"east|south|up|west": {"model": "extrabiomesxl:vine/vine_3u", "y": 90},
+			"north|south|up|west": {"model": "extrabiomesxl:vine/vine_3u", "y": 180},
+			"east|north|up|west": {"model": "extrabiomesxl:vine/vine_3u", "y": 270},
+			"east|north|south|up|west": {"model": "extrabiomesxl:vine/vine_4u"}
+		},
+		"inventory": [{}]
+	}
+}

@@ -8,6 +8,7 @@ package extrabiomes.module.summa.worldgen;
 
 import java.util.Random;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkGenerator;
@@ -15,6 +16,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import extrabiomes.blocks.BlockCustomVine;
+import extrabiomes.helpers.BiomeHelper;
 import extrabiomes.lib.BiomeSettings;
 
 public class VineGenerator implements IWorldGenerator
@@ -54,9 +56,7 @@ public class VineGenerator implements IWorldGenerator
             World world, IChunkGenerator chunkGenerator,
             IChunkProvider chunkProvider)
     {
-        chunkX = chunkX << 4;
-        chunkZ = chunkZ << 4;
-        final Biome biome = world.getBiomeGenForCoords(chunkX, chunkZ);
+        final Biome biome = BiomeHelper.getBiome(world, chunkProvider, chunkX, chunkZ);
         
         if( !biomeCheck(biome) ) return;
 
@@ -66,8 +66,8 @@ public class VineGenerator implements IWorldGenerator
         {
             final int x = chunkX + rand.nextInt(16) + 8;
             final int z = chunkZ + rand.nextInt(16) + 8;
-            final int y = world.getHeightValue(x, z);
-            vineGen.generate(world, rand, x, y, z);
+            
+            vineGen.generate(world, rand, world.getHeight(new BlockPos(x, 0, z)));
         }
     }
 

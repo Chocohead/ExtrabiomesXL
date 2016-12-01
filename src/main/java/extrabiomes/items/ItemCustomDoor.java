@@ -33,7 +33,7 @@ public class ItemCustomDoor extends ItemBlock {
   
   @Override
   public void registerIcons(IIconRegister iconRegister) {
-    itemIcon = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + ((BlockCustomWoodDoor) this.field_150939_a).getTextureName());
+    itemIcon = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + ((BlockCustomWoodDoor) this.block).getTextureName());
   }
   
   /**
@@ -56,11 +56,11 @@ public class ItemCustomDoor extends ItemBlock {
       ++y;
 
       if (player.canPlayerEdit(x, y, z, p_77648_7_, itemStack) && player.canPlayerEdit(x, y + 1, z, p_77648_7_, itemStack)) {
-        if (!this.field_150939_a.canPlaceBlockAt(world, x, y, z)) {
+        if (!this.block.canPlaceBlockAt(world, x, y, z)) {
           return false;
         } else {
           int direction = MathHelper.floor_double((double)((player.rotationYaw + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
-          placeDoorBlock(world, x, y, z, direction, this.field_150939_a);
+          placeDoorBlock(world, x, y, z, direction, this.block);
           --itemStack.stackSize;
           return true;
         }
@@ -113,7 +113,7 @@ public class ItemCustomDoor extends ItemBlock {
    */
   @Override
   public String getUnlocalizedName() {
-    return ((BlockCustomWoodDoor) this.field_150939_a).getUnlocalizedName();
+    return ((BlockCustomWoodDoor) this.block).getUnlocalizedName();
   }
 
   /**
@@ -122,6 +122,6 @@ public class ItemCustomDoor extends ItemBlock {
    */
   @Override
   public String getUnlocalizedName(ItemStack stack) {
-    return ((BlockCustomWoodDoor) this.field_150939_a).getUnlocalizedName();
+    return ((BlockCustomWoodDoor) this.block).getUnlocalizedName();
   }
 }

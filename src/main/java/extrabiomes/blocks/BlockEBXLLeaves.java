@@ -45,7 +45,7 @@ public class BlockEBXLLeaves<T extends Enum<T> & ILeafSerializable> extends Bloc
 	@SideOnly(Side.CLIENT)
 	private class LeafMapper extends CustomStateMapper {
 		@Override
-		protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+		protected ModelResourceLocation getModelLocation(IBlockState state) {
 			assert state.getBlock() == BlockEBXLLeaves.this;
 			return new ModelResourceLocation(new ResourceLocation(Extrabiomes.RESOURCE_PATH, "leaves"), getPropertyString(state.getProperties()));
 		}
