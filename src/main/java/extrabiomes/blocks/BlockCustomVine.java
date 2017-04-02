@@ -3,10 +3,13 @@ package extrabiomes.blocks;
 import java.util.Locale;
 import java.util.Map;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import extrabiomes.Extrabiomes;
 import extrabiomes.lib.ITextureRegisterer;
 import extrabiomes.utility.ModelUtil.CustomStateMapper;
 import net.minecraft.block.BlockVine;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
@@ -14,6 +17,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -72,6 +76,7 @@ public class BlockCustomVine extends BlockVine implements ITextureRegisterer {
 		this.type = type;
 		setHardness(0.2F);
 		setCreativeTab(Extrabiomes.tabsEBXL);
+		setSoundType(SoundType.PLANT);
 	}
 	
 	@Override
