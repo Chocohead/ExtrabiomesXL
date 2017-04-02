@@ -3,11 +3,6 @@ package extrabiomes.blocks;
 import java.util.Locale;
 import java.util.Map;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import extrabiomes.Extrabiomes;
-import extrabiomes.lib.ITextureRegisterer;
-import extrabiomes.utility.ModelUtil.CustomStateMapper;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
@@ -17,10 +12,14 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.IBlockAccess;
+
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import extrabiomes.Extrabiomes;
+import extrabiomes.lib.ITextureRegisterer;
+import extrabiomes.utility.ModelUtil.CustomStateMapper;
 
 public class BlockCustomVine extends BlockVine implements ITextureRegisterer {
 	@SideOnly(Side.CLIENT)
@@ -45,7 +44,7 @@ public class BlockCustomVine extends BlockVine implements ITextureRegisterer {
 
 		protected String getFacingString(Map<IProperty<?>, Comparable<?>> values) {
 			StringBuilder out = new StringBuilder();
-			
+
 			for (IProperty<Boolean> facing : allFaces) {
 				if ((boolean) values.get(facing)) {
 					if (out.length() > 0) {
@@ -54,14 +53,14 @@ public class BlockCustomVine extends BlockVine implements ITextureRegisterer {
 					out.append(facing.getName());
 				}
 			}
-			
+
 			return out.length() < 1 ? "none" : out.toString();
 		}
 	}
-	
+
 	public static enum VineType {
 		GLORIOSA, SPANISH_MOSS;
-		
+
 		@Override
 		public String toString() {
 			return name().toLowerCase(Locale.ENGLISH);
@@ -72,20 +71,20 @@ public class BlockCustomVine extends BlockVine implements ITextureRegisterer {
 
 	public BlockCustomVine(VineType type) {
 		super();
-		
+
 		this.type = type;
 		setHardness(0.2F);
 		setCreativeTab(Extrabiomes.tabsEBXL);
 		setSoundType(SoundType.PLANT);
 	}
-	
+
 	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerTexture() {
+	@SideOnly(Side.CLIENT)
+	public void registerTexture() {
 		VineMapper mapper = new VineMapper();
 		Item item = Item.getItemFromBlock(this);
-		
+
 		ModelLoader.setCustomStateMapper(this, mapper);
 		ModelLoader.setCustomModelResourceLocation(item, 0, mapper.getModelLocation(new ItemStack(item)));
-    }
+	}
 }
